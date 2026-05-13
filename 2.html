@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       💌 CHANGE THIS: Update the tab title with your names
+       ============================================================ -->
+  <title>100 Days — Bin & Nini ✿</title>
+
+  <!-- Google Fonts: Handwritten + Typewriter + Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================================================================
+       CSS — 100 Days Anniversary Website
+       Fujifilm / Vintage Scrapbook Aesthetic
+       ================================================================ */
+
+    /* ────────────────────────────────────────────────────────────────
+       1. CUSTOM PROPERTIES (Design Tokens)
+       ──────────────────────────────────────────────────────────────── */
+    :root {
+      --cream:        #F9F6F0;
+      --cream-dark:   #EDE8DF;
+      --parchment:    #E8DFD0;
+      --sepia:        #C8A882;
+      --sepia-dark:   #9E7B58;
+      --ink:          #3A2E24;
+      --ink-light:    #6B5744;
+      --accent-red:   #B05050;
+      --accent-rose:  #D4897A;
+      --shadow:       rgba(58, 46, 36, 0.18);
+      --font-hand:    'Caveat', cursive;
+      --font-type:    'Courier Prime', monospace;
+      --font-serif:   'Playfair Display', Georgia, serif;
+      --font-body:    'Lora', Georgia, serif;
+      --section-pad:  clamp(80px, 12vw, 150px);
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       2. RESET & BASE
+       ──────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.7;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: none; border: none; background: none; font-family: inherit; }
+
+    /* ────────────────────────────────────────────────────────────────
+       3. CUSTOM CURSOR
+       ──────────────────────────────────────────────────────────────── */
+    .custom-cursor {
+      position: fixed; top: 0; left: 0;
+      width: 28px; height: 28px;
+      pointer-events: none; z-index: 9999;
+      font-size: 18px; line-height: 28px; text-align: center;
+      color: var(--accent-red); opacity: 0.85;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, opacity 0.2s;
+      user-select: none;
+      filter: drop-shadow(0 0 4px rgba(176,80,80,0.4));
+    }
+    .custom-cursor.clicked { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }
+
+    /* ────────────────────────────────────────────────────────────────
+       4. FILM GRAIN OVERLAY
+       ──────────────────────────────────────────────────────────────── */
+    .grain-overlay {
+      position: fixed; inset: 0; z-index: 100;
+      pointer-events: none; opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      animation: grain-shift 0.4s steps(1) infinite;
+    }
+    @keyframes grain-shift {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-3px, 2px); }
+      50%  { transform: translate(2px, -3px); }
+      75%  { transform: translate(-1px, 4px); }
+      100% { transform: translate(3px, -1px); }
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       5. LIGHT LEAK EFFECTS
+       ──────────────────────────────────────────────────────────────── */
+    .light-leak {
+      position: fixed; z-index: 101; pointer-events: none;
+      border-radius: 50%; opacity: 0.28;
+      animation: leak-pulse 8s ease-in-out infinite alternate;
+    }
+    .light-leak--tl {
+      top: -180px; left: -180px; width: 500px; height: 500px;
+      background: radial-gradient(circle, #F5C98A 0%, #E8A56F 30%, transparent 70%);
+    }
+    .light-leak--br {
+      bottom: -200px; right: -200px; width: 600px; height: 600px;
+      background: radial-gradient(circle, #D4897A 0%, #B05050 25%, transparent 65%);
+      animation-delay: 4s;
+    }
+    @keyframes leak-pulse {
+      0%   { opacity: 0.22; transform: scale(1); }
+      100% { opacity: 0.34; transform: scale(1.08); }
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       6. CAMERA FLASH OVERLAY
+       ──────────────────────────────────────────────────────────────── */
+    .flash-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: #fff; opacity: 0; pointer-events: none;
+      transition: opacity 0.05s ease;
+    }
+    .flash-overlay.flash-active { opacity: 0.92; }
+
+    /* ────────────────────────────────────────────────────────────────
+       7. SHARED SECTION STYLES
+       ──────────────────────────────────────────────────────────────── */
+    .section-label {
+      font-family: var(--font-type); font-size: 0.78rem;
+      letter-spacing: 0.18em; color: var(--sepia-dark);
+      text-align: center; margin-bottom: 0.6rem; text-transform: uppercase;
+    }
+    .section-title {
+      font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600; font-style: italic; color: var(--ink);
+      text-align: center; margin-bottom: 0.5rem; line-height: 1.2;
+    }
+    .section-subtitle {
+      font-family: var(--font-body); font-size: 0.95rem;
+      color: var(--ink-light); text-align: center; margin-bottom: 2.5rem;
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       8. HERO SECTION
+       ──────────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem; overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 55%, #F5ECE0 0%, transparent 70%),
+        linear-gradient(160deg, #EDE3D6 0%, #DFD4C4 50%, #D0C5B2 100%);
+    }
+    .hero__vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 90% 90% at 50% 50%,
+        transparent 55%, rgba(40, 28, 18, 0.45) 100%);
+      pointer-events: none;
+    }
+    .hero__content {
+      position: relative; z-index: 2;
+      text-align: center; max-width: 640px;
+    }
+    .hero__prelude {
+      font-family: var(--font-hand); font-size: 1.4rem;
+      color: var(--sepia-dark); margin-bottom: 0.5rem;
+      opacity: 0; animation: fade-up 1s ease 0.3s forwards;
+    }
+    .hero__title {
+      font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 600; line-height: 1.05; color: var(--ink);
+      margin-bottom: 0.4rem;
+      opacity: 0; animation: fade-up 1s ease 0.6s forwards;
+    }
+    .hero__title--accent { display: block; font-style: italic; color: var(--accent-red); }
+    .hero__title--name {
+      display: block; font-family: var(--font-hand);
+      font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 700; color: var(--ink);
+    }
+    .hero__since {
+      font-family: var(--font-type); font-size: 0.82rem;
+      letter-spacing: 0.12em; color: var(--ink-light);
+      text-transform: uppercase; margin-bottom: 2.5rem;
+      opacity: 0; animation: fade-up 1s ease 0.9s forwards;
+    }
+
+    /* Live Counter */
+    .hero__counter {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.6rem; flex-wrap: wrap;
+      opacity: 0; animation: fade-up 1s ease 1.2s forwards;
+    }
+    .counter__block {
+      display: flex; flex-direction: column; align-items: center;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(200,168,130,0.5);
+      border-radius: 10px; padding: 0.6rem 1rem;
+      backdrop-filter: blur(4px); min-width: 72px;
+    }
+    .counter__value {
+      font-family: var(--font-type); font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700; color: var(--ink); line-height: 1;
+    }
+    .counter__label {
+      font-family: var(--font-type); font-size: 0.65rem;
+      letter-spacing: 0.1em; color: var(--sepia-dark);
+      text-transform: uppercase; margin-top: 0.2rem;
+    }
+    .counter__sep { font-size: 1.2rem; color: var(--sepia); line-height: 1; }
+
+    /* Scroll Arrow */
+    .hero__scroll-arrow {
+      position: absolute; bottom: 2.2rem; left: 50%;
+      transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+      opacity: 0; animation: fade-in 1s ease 2s forwards;
+    }
+    .scroll-arrow__text {
+      font-family: var(--font-type); font-size: 0.68rem;
+      letter-spacing: 0.15em; color: var(--ink-light); text-transform: uppercase;
+    }
+    .scroll-arrow__icon {
+      font-size: 1.4rem; color: var(--accent-red);
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%        { transform: translateY(8px); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       9. TIMEKEEPING GALLERY (Vertical Timeline)
+       ──────────────────────────────────────────────────────────────── */
+    .gallery {
+      padding: var(--section-pad) 1rem;
+      background: var(--cream-dark);
+      position: relative; overflow: hidden;
+    }
+    /* Subtle film strip borders top and bottom */
+    .gallery::before, .gallery::after {
+      content: ''; position: absolute; left: 0; right: 0; height: 28px;
+      background: repeating-linear-gradient(
+        90deg, var(--sepia) 0px, var(--sepia) 14px, transparent 14px, transparent 28px
+      );
+      opacity: 0.12;
+    }
+    .gallery::before { top: 0; }
+    .gallery::after  { bottom: 0; }
+
+    .gallery__hint {
+      font-family: var(--font-type); font-size: 0.8rem;
+      color: var(--sepia-dark); letter-spacing: 0.15em;
+      text-align: center; margin-bottom: 4rem; opacity: 0.8; text-transform: uppercase;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+    /* The Center Line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--sepia), transparent);
+      transform: translateX(-50%);
+      opacity: 0.5;
+    }
+
+    .timeline__item {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 50%;
+      position: relative;
+      margin-bottom: 6rem;
+      width: 100%;
+    }
+    /* Alternate sides */
+    .timeline__item:nth-child(even) {
+      justify-content: flex-start;
+      padding-right: 0;
+      padding-left: 50%;
+    }
+    
+    /* The dot on the timeline */
+    .timeline__dot {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px; height: 16px;
+      background: var(--cream);
+      border: 3px solid var(--accent-red);
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: 0 0 0 4px rgba(176,80,80,0.1);
+    }
+
+    .timeline__content {
+      width: 85%;
+      max-width: 380px;
+      position: relative;
+    }
+    /* Margin adjustments to pull cards closer to the center line */
+    .timeline__item:nth-child(odd) .timeline__content { margin-right: 3rem; margin-left: auto; }
+    .timeline__item:nth-child(even) .timeline__content { margin-left: 3rem; margin-right: auto; }
+
+    .timeline__date {
+      font-family: var(--font-type);
+      font-size: 0.85rem;
+      color: var(--sepia-dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    /* Align date text properly based on side */
+    .timeline__item:nth-child(odd) .timeline__date { text-align: right; }
+    .timeline__item:nth-child(even) .timeline__date { text-align: left; }
+
+    /* Big Polaroid Photo */
+    .timeline__card {
+      background: #fff;
+      padding: 14px 14px 45px 14px;
+      box-shadow: 
+        0 10px 30px var(--shadow), 
+        inset 0 0 0 1px rgba(200,168,130,0.3);
+      border-radius: 3px;
+      transform: rotate(calc(var(--tilt, 0) * 1deg));
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      cursor: pointer; /* Interaction affordance */
+      position: relative;
+    }
+    .timeline__card::after {
+      content: '⤢ click to view';
+      position: absolute;
+      bottom: 12px; left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-type);
+      font-size: 0.65rem; color: var(--sepia-dark);
+      letter-spacing: 0.1em; opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .timeline__card:hover {
+      transform: rotate(0deg) scale(1.05);
+      box-shadow: 0 20px 50px rgba(58,46,36,0.25);
+      z-index: 10;
+    }
+    .timeline__card:hover::after { opacity: 1; }
+
+    .timeline__card img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: sepia(0.15) contrast(0.95);
+      border-radius: 2px;
+    }
+    
+    /* Hidden memory text for JS to grab */
+    .timeline__memory { display: none; }
+
+    /* ────────────────────────────────────────────────────────────────
+       9.5. PHOTO LIGHTBOX MODAL
+       ──────────────────────────────────────────────────────────────── */
+    .photo-modal {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(30, 22, 15, 0.85);
+      backdrop-filter: blur(10px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .photo-modal.active { opacity: 1; pointer-events: all; }
+
+    .photo-modal__close {
+      position: absolute; top: 2rem; right: 2rem;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-type);
+      font-size: 1.5rem; letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: color 0.3s, transform 0.3s;
+      z-index: 2001;
+    }
+    .photo-modal__close:hover { color: #fff; transform: scale(1.1); }
+
+    .photo-modal__content {
+      display: flex; flex-direction: column; align-items: center;
+      max-width: 90vw; max-height: 90vh;
+      transform: translateY(30px) scale(0.95);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .photo-modal.active .photo-modal__content { transform: translateY(0) scale(1); }
+
+    .photo-modal__frame {
+      background: #fff;
+      padding: 18px 18px 60px 18px;
+      border-radius: 4px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    .photo-modal__frame img {
+      max-height: 60vh; width: auto; max-width: 80vw;
+      border-radius: 2px;
+      object-fit: contain;
+    }
+    .photo-modal__caption {
+      position: absolute; bottom: 15px; left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-hand);
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--ink);
+      line-height: 1.3;
+      padding: 0 1rem;
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       10. ENHANCED LOVE JAR SECTION
+       ──────────────────────────────────────────────────────────────── */
+    .jar-section {
+      padding: var(--section-pad) 1rem;
+      background: var(--cream); position: relative;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .jar-wrapper {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 2rem; width: 100%; max-width: 480px; position: relative;
+    }
+    
+    /* Interactive Jar Element */
+    .jar-icon { 
+      animation: jar-float 5s ease-in-out infinite; 
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .jar-icon::before {
+      content: ''; position: absolute; inset: -20px;
+      background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: -1;
+    }
+    .jar-icon:hover { transform: scale(1.08) rotate(-2deg); }
+    .jar-icon:hover::before { opacity: 1; }
+    
+    /* Shake Animation Triggered on Click */
+    @keyframes jar-shake {
+      0%, 100% { transform: translateX(0) rotate(0); }
+      20% { transform: translateX(-6px) rotate(-4deg); }
+      40% { transform: translateX(6px) rotate(4deg); }
+      60% { transform: translateX(-4px) rotate(-2deg); }
+      80% { transform: translateX(4px) rotate(2deg); }
+    }
+    .jar-icon.shaking { animation: jar-shake 0.4s ease-in-out; }
+
+    .jar-svg {
+      width: 140px; height: 180px;
+      filter: drop-shadow(0 12px 25px rgba(58,46,36,0.18));
+    }
+    @keyframes jar-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    .jar-btn {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: var(--accent-red); color: #FFF8F5;
+      border-radius: 100px; padding: 0.85rem 2.2rem;
+      font-family: var(--font-hand); font-size: 1.3rem; letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(176,80,80,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
+    }
+    .jar-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(176,80,80,0.4); background: #9A3F3F; }
+    .jar-btn:active { transform: translateY(0); }
+    .jar-btn__icon { font-size: 1.2rem; }
+
+    /* Heart Particle Effect for Jar */
+    .jar-heart-particle {
+      position: fixed;
+      font-size: 1.5rem;
+      color: var(--accent-red);
+      pointer-events: none;
+      z-index: 9999;
+      animation: float-heart 1.2s ease-out forwards;
+      filter: drop-shadow(0 2px 4px rgba(176,80,80,0.3));
+    }
+    @keyframes float-heart {
+      0%   { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100px) scale(1.3) rotate(25deg); opacity: 0; }
+    }
+
+    /* Love message pop-up with "Taped Paper" Aesthetic */
+    .love-message {
+      position: fixed; inset: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem; background: rgba(58,46,36,0.55);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease; backdrop-filter: blur(6px);
+    }
+    .love-message.open { opacity: 1; pointer-events: all; }
+    
+    .love-message__inner {
+      position: relative; background: #FFFEFB;
+      border-radius: 2px; /* sharper, paper-like edges */
+      padding: 3rem 2rem 2.5rem;
+      max-width: 420px; width: 100%;
+      box-shadow: 0 20px 60px rgba(58,46,36,0.3), 0 2px 8px rgba(0,0,0,0.05);
+      transform: scale(0.85) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      /* Subtle crumpled texture base */
+      background-image: 
+        repeating-linear-gradient(transparent 0px, transparent 34px, rgba(200,168,130,0.12) 34px, rgba(200,168,130,0.12) 35px),
+        radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(240,230,214,0.3) 100%);
+    }
+    /* Washi Tape Strip at the top */
+    .love-message__inner::before {
+      content: '';
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 110px; height: 32px;
+      background-color: rgba(220, 205, 185, 0.85);
+      background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.2) 50%);
+      background-size: 4px 4px;
+      box-shadow: 0 1px 3px rgba(58,46,36,0.15);
+      z-index: 10;
+      clip-path: polygon(0 0, 100% 3%, 98% 100%, 2% 97%); 
+    }
+    .love-message.open .love-message__inner { transform: scale(1) translateY(0) rotate(1deg); }
+    
+    .love-message__close {
+      position: absolute; top: 1rem; right: 1rem;
+      font-family: var(--font-type); font-size: 0.9rem;
+      color: var(--ink-light); cursor: none; opacity: 0.6;
+      transition: opacity 0.2s; line-height: 1; padding: 4px 6px;
+      z-index: 20;
+    }
+    .love-message__close:hover { opacity: 1; }
+    
+    .love-message__slip {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 1.2rem; text-align: center;
+    }
+    .love-message__text {
+      font-family: var(--font-hand); font-size: clamp(1.45rem, 5vw, 1.8rem);
+      color: var(--ink); line-height: 1.55; position: relative; padding: 0 0.5rem;
+    }
+    .love-message__text::before {
+      content: '"'; font-size: 3rem; color: var(--accent-rose); opacity: 0.35;
+      position: absolute; top: -1.2rem; left: -0.5rem;
+      font-family: var(--font-serif); line-height: 1;
+    }
+    .love-message__number {
+      font-family: var(--font-type); font-size: 0.72rem;
+      letter-spacing: 0.12em; color: var(--sepia-dark); text-transform: uppercase;
+      margin-top: 1rem;
+    }
+    .jar-dots {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+      justify-content: center; min-height: 14px;
+    }
+    .jar-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--cream-dark); border: 1.5px solid var(--sepia);
+      transition: background 0.3s;
+    }
+    .jar-dot.seen { background: var(--accent-red); border-color: var(--accent-red); }
+
+    /* ────────────────────────────────────────────────────────────────
+       11. LOVE LETTER SECTION
+       ──────────────────────────────────────────────────────────────── */
+    .letter-section {
+      padding: var(--section-pad) clamp(1rem, 6vw, 3rem);
+      background: var(--parchment);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 3rem; position: relative;
+    }
+    .letter-section::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--sepia), transparent);
+      opacity: 0.5;
+    }
+    .letter-paper {
+      background: #FFFEFB; max-width: 680px; width: 100%;
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 6vw, 4rem);
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(58,46,36,0.08), 0 12px 40px rgba(58,46,36,0.12),
+        inset 0 0 0 1px rgba(200,168,130,0.3);
+      position: relative;
+      background-image:
+        repeating-linear-gradient(
+          transparent 0px, transparent 36px,
+          rgba(200,168,130,0.1) 36px, rgba(200,168,130,0.1) 37px
+        ),
+        radial-gradient(ellipse 100% 100% at 50% 0%, rgba(245,220,180,0.15), transparent 70%);
+    }
+    .letter-paper::before {
+      content: ''; position: absolute; top: 0; bottom: 0;
+      left: clamp(2.5rem, 7vw, 5rem); width: 1px;
+      background: rgba(212,137,122,0.3);
+    }
+    .letter-paper__header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 2rem; font-family: var(--font-type); font-size: 0.78rem;
+      color: var(--ink-light); letter-spacing: 0.08em; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .letter-paper__salutation {
+      font-family: var(--font-serif); font-size: 1.3rem; font-style: italic;
+      color: var(--ink); margin-bottom: 1.2rem;
+    }
+    .letter-paper__body {
+      font-family: var(--font-body); font-size: 1.02rem;
+      color: var(--ink); line-height: 2; margin-bottom: 1.2rem;
+    }
+    .letter-paper__sign {
+      font-family: var(--font-hand); font-size: 1.4rem; color: var(--ink); margin-top: 1.5rem;
+    }
+    .letter-paper__sign em { font-style: italic; color: var(--accent-red); }
+    .letter-paper__seal {
+      position: absolute; bottom: -24px; right: 2.5rem;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--accent-red);
+      display: flex; align-items: center; justify-content: center;
+      color: #FFF0EE; font-size: 1.4rem;
+      box-shadow: 0 4px 16px rgba(176,80,80,0.4), inset 0 0 0 3px rgba(255,255,255,0.2);
+      transform: rotate(-15deg);
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       12. AUDIO PLAYER
+       ──────────────────────────────────────────────────────────────── */
+    .player-wrapper { width: 100%; max-width: 480px; }
+    .player {
+      background: var(--ink); color: #F5E8D8;
+      border-radius: 14px; padding: 1.2rem 1.4rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      box-shadow: 0 8px 30px rgba(58,46,36,0.3);
+      position: relative; overflow: hidden;
+    }
+    .player::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,168,130,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .player__label { display: flex; align-items: center; gap: 0.6rem; }
+    .player__icon { font-size: 1rem; color: var(--sepia); }
+    .player__title { font-family: var(--font-type); font-size: 0.82rem; letter-spacing: 0.05em; color: #C8A882; }
+    .player__title em { color: var(--accent-rose); font-style: italic; }
+    .player__controls { display: flex; align-items: center; gap: 0.8rem; }
+    .player__btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--accent-red);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.85rem; flex-shrink: 0;
+      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 2px 8px rgba(176,80,80,0.4);
+    }
+    .player__btn:hover { transform: scale(1.1); background: #9A3F3F; }
+    .player__progress-wrap { flex: 1; }
+    .player__progress-bg {
+      height: 4px; background: rgba(255,255,255,0.12);
+      border-radius: 2px; overflow: hidden; cursor: none;
+    }
+    .player__progress-fill {
+      height: 100%; background: linear-gradient(90deg, var(--sepia), var(--accent-rose));
+      border-radius: 2px; width: 0%; transition: width 0.3s linear;
+    }
+    .player__time {
+      font-family: var(--font-type); font-size: 0.75rem;
+      color: var(--sepia); min-width: 32px; text-align: right;
+    }
+    .player__vinyl {
+      position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      background: conic-gradient(#2A2019 0deg, #3A2E24 90deg, #2A2019 180deg, #3A2E24 270deg, #2A2019 360deg);
+      opacity: 0.7;
+      box-shadow: inset 0 0 0 8px rgba(255,255,255,0.06), inset 0 0 0 9px rgba(255,255,255,0.04);
+    }
+    .vinyl__inner {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #1A1410; box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+    }
+    .player__vinyl.spinning { animation: vinyl-spin 3s linear infinite; }
+    @keyframes vinyl-spin {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to   { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    /* ────────────────────────────────────────────────────────────────
+       13. FOOTER
+       ──────────────────────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--ink); color: rgba(232,215,192,0.6);
+      text-align: center; padding: 2.5rem 1rem;
+      font-family: var(--font-type); font-size: 0.8rem;
+      letter-spacing: 0.08em; line-height: 2;
+    }
+    .footer-tiny { font-size: 0.7rem; opacity: 0.4; margin-top: 0.3rem; }
+
+    /* ────────────────────────────────────────────────────────────────
+       14. SCROLL-REVEAL
+       ──────────────────────────────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ────────────────────────────────────────────────────────────────
+       15. RESPONSIVE
+       ──────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .timeline::before { left: 24px; transform: none; }
+      .timeline__item { justify-content: flex-start !important; padding-right: 0 !important; padding-left: 60px !important; margin-bottom: 4rem; }
+      .timeline__dot { left: 24px; transform: translate(-50%, -50%); }
+      .timeline__content { width: 100%; max-width: 100%; margin: 0 !important; }
+      .timeline__date { text-align: left !important; }
+    }
+    @media (max-width: 600px) {
+      .hero__counter { gap: 0.35rem; }
+      .counter__block { min-width: 58px; padding: 0.5rem 0.7rem; }
+      .counter__sep { display: none; }
+      .letter-paper::before { display: none; }
+      .player__vinyl { display: none; }
+      .photo-modal__frame img { max-width: 90vw; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Film grain, light leaks, flash, cursor -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="light-leak light-leak--tl" aria-hidden="true"></div>
+  <div class="light-leak light-leak--br" aria-hidden="true"></div>
+  <div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
+  <div class="custom-cursor" id="customCursor" aria-hidden="true">♥</div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 · HERO
+       ══════════════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero__vignette" aria-hidden="true"></div>
+    <div class="hero__content">
+
+      <!-- ✏️ CHANGE: Replace "Linh" with your girlfriend's name -->
+      <p class="hero__prelude">for my dearest,</p>
+      <h1 class="hero__title">
+        <span class="hero__title--accent">100 Days,</span>
+        <br />
+        <span class="hero__title--name">Nini ♥</span>
+      </h1>
+
+      <!-- ✏️ CHANGE: Update this display date if needed -->
+      <p class="hero__since">since january 30, 2026</p>
+
+      <!-- Live counter — values filled by JS -->
+      <div class="hero__counter" id="liveCounter">
+        <div class="counter__block">
+          <span class="counter__value" id="countDays">100</span>
+          <span class="counter__label">days</span>
+        </div>
+        <span class="counter__sep">·</span>
+        <div class="counter__block">
+          <span class="counter__value" id="countHours">00</span>
+          <span class="counter__label">hours</span>
+        </div>
+        <span class="counter__sep">·</span>
+        <div class="counter__block">
+          <span class="counter__value" id="countMinutes">00</span>
+          <span class="counter__label">mins</span>
+        </div>
+        <span class="counter__sep">·</span>
+        <div class="counter__block">
+          <span class="counter__value" id="countSeconds">00</span>
+          <span class="counter__label">secs</span>
+        </div>
+      </div>
+
+    </div>
+    <a href="#gallery" class="hero__scroll-arrow" aria-label="Scroll down">
+      <span class="scroll-arrow__text">scroll down</span>
+      <span class="scroll-arrow__icon">↓</span>
+    </a>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 · TIMEKEEPING GALLERY (Vertical Timeline)
+       ══════════════════════════════════════════════════════════ -->
+  <section class="gallery" id="gallery">
+    <div class="section-label">✦ a walk down memory lane ✦</div>
+    <h2 class="section-title">Moments We've Kept</h2>
+    <p class="gallery__hint">scroll &amp; click photos to view</p>
+
+    <div class="timeline">
+      
+      <!-- TIMELINE ITEM 1 -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <div class="timeline__date">Jan 30 · Day 1</div>
+          <!-- Card acts as the clickable thumbnail -->
+          <div class="timeline__card" style="--tilt: -3;">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&q=80" alt="First Date" loading="lazy" />
+            <!-- Hidden text that will pop up when clicked -->
+            <div class="timeline__memory">The moment I knew you were something different. I kept replaying it on the ride home.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE ITEM 2 -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <div class="timeline__date">Feb 17 · Day 18</div>
+          <div class="timeline__card" style="--tilt: 4;">
+            <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800&q=80" alt="Lazy Afternoon" loading="lazy" />
+            <div class="timeline__memory">We talked until the café closed. I honestly just didn't want to go home.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE ITEM 3 -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <div class="timeline__date">Mar 02 · Day 31</div>
+          <div class="timeline__card" style="--tilt: -2;">
+            <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=800&q=80" alt="Dinner for two" loading="lazy" />
+            <div class="timeline__memory">You stole all the good dumplings and smiled like you weren't sorry at all.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE ITEM 4 -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <div class="timeline__date">Mar 25 · Day 54</div>
+          <div class="timeline__card" style="--tilt: 3;">
+            <img src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&q=80" alt="Sunset" loading="lazy" />
+            <div class="timeline__memory">You looked at the sky and I looked at you. I'll never admit that out loud.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE ITEM 5 -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <div class="timeline__date">Apr 10 · Day 70</div>
+          <div class="timeline__card" style="--tilt: -4;">
+            <img src="https://images.unsplash.com/photo-1543332164-6e82f355badc?w=800&q=80" alt="Movie Night" loading="lazy" />
+            <div class="timeline__memory">You fell asleep in twenty minutes. I watched the rest alone and loved every second.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE ITEM 6 -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <div class="timeline__date">May 10 · Day 100</div>
+          <div class="timeline__card" style="--tilt: 2;">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Adventure" loading="lazy" />
+            <div class="timeline__memory">100 days in and I still get that feeling when your name shows up on my phone.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- THE PHOTO LIGHTBOX (Hidden by default, triggered by clicking a photo) -->
+  <div class="photo-modal" id="photoModal" aria-hidden="true">
+    <div class="photo-modal__close" id="modalClose">✕ CLOSE</div>
+    <div class="photo-modal__content">
+      <div class="photo-modal__frame">
+        <img src="" id="modalImg" alt="Enlarged memory" />
+        <p class="photo-modal__caption" id="modalCaption"></p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 · ENHANCED LOVE JAR
+       ══════════════════════════════════════════════════════════ -->
+  <section class="jar-section" id="reasons">
+    <div class="section-label">✦ little notes for you ✦</div>
+    <h2 class="section-title">Why I Love You</h2>
+    <p class="section-subtitle">Pick a slip from the jar — there are 10 waiting for you.</p>
+
+    <div class="jar-wrapper reveal">
+      
+      <!-- Detailed Interactive SVG Jar -->
+      <div class="jar-icon" id="jarElement" aria-label="Click to open a note" title="Click to open!">
+        <svg viewBox="0 0 140 180" xmlns="http://www.w3.org/2000/svg" class="jar-svg" id="jarSvg">
+          <!-- Cork Lid -->
+          <path d="M 45 15 L 95 15 L 90 35 L 50 35 Z" fill="#A48363" stroke="#5C452D" stroke-width="2"/>
+          <path d="M 45 15 Q 70 5 95 15" fill="#C29F7A"/>
+          
+          <!-- Jar Neck -->
+          <rect x="42" y="35" width="56" height="15" rx="4" fill="rgba(240, 230, 214, 0.6)" stroke="#9E7B58" stroke-width="2.5"/>
+          <!-- String tied around neck -->
+          <path d="M 40 42 Q 70 52 100 42" stroke="#6B5744" stroke-width="2" fill="none"/>
+          <!-- Heart tag -->
+          <path d="M 85 45 L 85 65" stroke="#6B5744" stroke-width="1.5"/>
+          <path d="M 85 75 A 6 6 0 0 0 97 65 L 85 85 L 73 65 A 6 6 0 0 0 85 75 Z" fill="#B05050" transform="translate(0, -5) scale(0.8)"/>
+          
+          <!-- Glass Body -->
+          <path d="M 42 50 Q 20 60 20 90 L 20 150 Q 20 170 40 170 L 100 170 Q 120 170 120 150 L 120 90 Q 120 60 98 50 Z" fill="rgba(255, 252, 248, 0.45)" stroke="#9E7B58" stroke-width="2.5"/>
+          
+          <!-- Folded Notes/Slips inside -->
+          <path d="M 30 160 L 60 140 L 50 168 Z" fill="#D4897A" opacity="0.9"/>
+          <path d="M 50 165 L 80 130 L 90 168 Z" fill="#E8DFD0" stroke="#C8A882" stroke-width="1"/>
+          <path d="M 85 165 L 110 145 L 115 160 Z" fill="#B05050" opacity="0.75"/>
+          <path d="M 25 145 L 55 125 L 40 155 Z" fill="#F9F6F0" stroke="#C8A882" stroke-width="1"/>
+          <path d="M 65 145 L 100 115 L 110 140 Z" fill="#D4897A" opacity="0.8"/>
+          <path d="M 45 130 L 75 105 L 80 135 Z" fill="#B05050" opacity="0.6"/>
+          
+          <!-- Glass reflections -->
+          <path d="M 30 75 Q 35 120 30 155" stroke="rgba(255,255,255,0.7)" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M 110 85 Q 108 100 110 115" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- Pop-up message display -->
+      <div class="love-message" id="loveMessage" aria-live="polite">
+        <div class="love-message__inner">
+          <span class="love-message__close" id="closeMessage" aria-label="Close">✕</span>
+          <div class="love-message__slip">
+            <p class="love-message__text" id="loveText"></p>
+            <span class="love-message__number" id="loveNumber">#1</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="jar-btn" id="openJarBtn" aria-label="Open a love note">
+        <span class="jar-btn__icon">♥</span>
+        <span class="jar-btn__label">Open a note</span>
+      </button>
+
+      <div class="jar-dots" id="jarDots" aria-label="Notes opened"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 · LOVE LETTER + AUDIO PLAYER
+       ══════════════════════════════════════════════════════════ -->
+  <section class="letter-section" id="letter">
+    <div class="section-label">✦ a letter for you ✦</div>
+
+    <article class="letter-paper reveal">
+      <div class="letter-paper__header">
+        <!-- ✏️ CHANGE: City and date -->
+        <span class="letter-paper__location">Hồ Chí Minh City</span>
+        <span class="letter-paper__date">May 10, 2026</span>
+      </div>
+
+      <!-- ✏️ CHANGE: Replace ALL placeholder text below with your real letter -->
+      <p class="letter-paper__salutation">My dearest Nini,</p>
+      <p class="letter-paper__body">
+        A hundred days ago, something shifted — quietly, the way the best things always do. I don't know if you felt it too, but I remember exactly how the light looked that day, and how easy it felt to just… be with you.
+      </p>
+      <p class="letter-paper__body">
+        Since then I've learned the way you laugh when something surprises you, the face you make when the food is good, the exact moment you stop pretending you're not tired. I've been collecting these things without meaning to, the way you collect film photos — small and true and yours.
+      </p>
+      <p class="letter-paper__body">
+        One hundred days isn't very long. But it's long enough to know I want a hundred more. And then a hundred after that.
+      </p>
+      <p class="letter-paper__body">Thank you for every single one of them.</p>
+
+      <!-- ✏️ CHANGE: Your name -->
+      <p class="letter-paper__sign">forever yours, <em>Bin</em> ♥</p>
+      <div class="letter-paper__seal" aria-hidden="true"><span>♥</span></div>
+    </article>
+
+    <!--
+      AUDIO PLAYER
+      ✏️ CHANGE src to your own audio file, e.g. src="song.mp3"
+      Put the file in the same folder as this index.html
+      ✏️ CHANGE the title text below too
+    -->
+    <div class="player-wrapper reveal">
+      <div class="player">
+        <div class="player__label">
+          <span class="player__icon">♫</span>
+          <!-- ✏️ CHANGE: Song name and artist -->
+          <span class="player__title">our song — <em>your artist name</em></span>
+        </div>
+        <audio id="audioPlayer" loop preload="none">
+          <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+        </audio>
+        <div class="player__controls">
+          <button class="player__btn" id="audioPlayBtn" aria-label="Play / Pause">
+            <span id="playIcon">▶</span>
+          </button>
+          <div class="player__progress-wrap">
+            <div class="player__progress-bg">
+              <div class="player__progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+          <span class="player__time" id="audioTime">0:00</span>
+        </div>
+        <div class="player__vinyl" id="playerVinyl" aria-hidden="true">
+          <div class="vinyl__inner"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <!-- ✏️ CHANGE: Your names -->
+    <p>made with ♥ for Nini · 100 days and counting</p>
+    <p class="footer-tiny">© 2026 Bin</p>
+  </footer>
+
+
+  <script>
+    /* ================================================================
+       JavaScript — 100 Days Anniversary Website
+       ================================================================ */
+
+    'use strict';
+
+    /* ──────────────────────────────────────────────────────────────
+       ✏️  CONFIGURATION — Edit these two things to personalise
+       ────────────────────────────────────────────────────────────── */
+
+    /**
+     * RELATIONSHIP_START — your exact start date.
+     * Format: YYYY-MM-DDTHH:MM:SS+07:00 (for Vietnam time)
+     * ✏️  If your start date is different, change the string below.
+     */
+    const RELATIONSHIP_START = new Date('2026-01-30T00:00:00+07:00');
+
+    /**
+     * LOVE_NOTES — the 10 messages in the love jar.
+     * ✏️  Replace every string with your own personal notes!
+     */
+    const LOVE_NOTES = [
+      "I love the way your face changes when you're genuinely excited about something — you forget to be cool about it.",
+      "I love that you remember small things. The things you weren't supposed to notice. But you always do.",
+      "I love how you make ordinary days feel like something worth keeping.",
+      "I love the sound of you laughing at something that surprised you. I keep chasing it.",
+      "I love that being quiet with you feels like a conversation.",
+      "I love how you look when you're focused — like nothing else in the world exists.",
+      "I love the way you say my name. Just… the way you say it.",
+      "I love that you're the first thing I want to tell things to.",
+      "I love every version of you I've met so far. I can't wait to meet the rest.",
+      "I love you. Simply, completely, and a little more each day.",
+    ];
+
+    /* ── 1. CUSTOM CURSOR ─────────────────────────────────────── */
+    const cursor = document.getElementById('customCursor');
+    if (cursor) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+      });
+      document.addEventListener('mousedown', () => cursor.classList.add('clicked'));
+      document.addEventListener('mouseup',   () => cursor.classList.remove('clicked'));
+      document.addEventListener('mouseleave',() => cursor.style.opacity = '0');
+      document.addEventListener('mouseenter',() => cursor.style.opacity = '0.85');
+    }
+
+    /* ── 2. CAMERA FLASH ──────────────────────────────────────── */
+    const flashOverlay = document.getElementById('flashOverlay');
+    function triggerFlash() {
+      if (!flashOverlay) return;
+      flashOverlay.classList.add('flash-active');
+      setTimeout(() => flashOverlay.classList.remove('flash-active'), 110);
+    }
+
+    /* ── 3. LIVE COUNTER ──────────────────────────────────────── */
+    const elDays    = document.getElementById('countDays');
+    const elHours   = document.getElementById('countHours');
+    const elMinutes = document.getElementById('countMinutes');
+    const elSeconds = document.getElementById('countSeconds');
+
+    function updateCounter() {
+      const diff = Date.now() - RELATIONSHIP_START.getTime();
+      if (diff < 0) { if (elDays) elDays.textContent = '0'; return; }
+      const totalSec = Math.floor(diff / 1000);
+      const s = totalSec % 60;
+      const totalMin = Math.floor(totalSec / 60);
+      const m = totalMin % 60;
+      const totalHr = Math.floor(totalMin / 60);
+      const h = totalHr % 24;
+      const d = Math.floor(totalHr / 24);
+      if (elDays)    elDays.textContent    = d;
+      if (elHours)   elHours.textContent   = String(h).padStart(2, '0');
+      if (elMinutes) elMinutes.textContent = String(m).padStart(2, '0');
+      if (elSeconds) elSeconds.textContent = String(s).padStart(2, '0');
+    }
+    updateCounter();
+    setInterval(updateCounter, 1000);
+
+    /* ── 4. TIMELINE PHOTO LIGHTBOX ───────────────────────────── */
+    const photoModal = document.getElementById('photoModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.timeline__card').forEach(card => {
+      card.addEventListener('click', () => {
+        triggerFlash();
+        const img = card.querySelector('img');
+        const memoryText = card.querySelector('.timeline__memory').textContent;
+        
+        setTimeout(() => {
+          modalImg.src = img.src;
+          modalCaption.textContent = memoryText;
+          photoModal.classList.add('active');
+          document.body.style.overflow = 'hidden'; 
+        }, 80);
+      });
+    });
+
+    function closeLightbox() {
+      if (!photoModal) return;
+      photoModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (modalClose) modalClose.addEventListener('click', closeLightbox);
+    if (photoModal) photoModal.addEventListener('click', e => { 
+      if (e.target === photoModal || e.target.classList.contains('photo-modal__content')) closeLightbox(); 
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    /* ── 5. ENHANCED LOVE JAR ─────────────────────────────────── */
+    const openJarBtn   = document.getElementById('openJarBtn');
+    const jarElement   = document.getElementById('jarElement');
+    const loveMessage  = document.getElementById('loveMessage');
+    const closeJarMsg  = document.getElementById('closeMessage');
+    const loveText     = document.getElementById('loveText');
+    const loveNumber   = document.getElementById('loveNumber');
+    const jarDots      = document.getElementById('jarDots');
+    let seenIndexes = [], lastIndex = -1;
+
+    function buildDots() {
+      if (!jarDots) return;
+      jarDots.innerHTML = '';
+      LOVE_NOTES.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'jar-dot'; dot.id = `dot-${i}`;
+        jarDots.appendChild(dot);
+      });
+    }
+    buildDots();
+
+    function triggerJarMagic(e) {
+      triggerFlash(); // Camera flash
+      
+      // Add shake animation to the jar
+      if (jarElement) {
+        jarElement.classList.remove('shaking');
+        void jarElement.offsetWidth; // trigger reflow
+        jarElement.classList.add('shaking');
+      }
+
+      // Spawn heart particles bursting from the jar
+      const rect = jarElement ? jarElement.getBoundingClientRect() : e.target.getBoundingClientRect();
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'jar-heart-particle';
+          heart.textContent = '♥';
+          heart.style.left = (rect.left + rect.width / 2 + (Math.random() * 80 - 40)) + 'px';
+          heart.style.top = (rect.top + 40) + 'px';
+          heart.style.color = Math.random() > 0.5 ? 'var(--accent-red)' : 'var(--accent-rose)';
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 1200);
+        }, i * 60); // stagger particle spawning
+      }
+
+      // Open the note slightly after the effects
+      setTimeout(openNote, 400);
+    }
+
+    function openNote() {
+      if (!loveText || !loveMessage) return;
+      if (seenIndexes.length === LOVE_NOTES.length) {
+        seenIndexes = [];
+        document.querySelectorAll('.jar-dot').forEach(d => d.classList.remove('seen'));
+      }
+      const available = LOVE_NOTES.map((_, i) => i).filter(i => !seenIndexes.includes(i) && i !== lastIndex);
+      const pool = available.length > 0 ? available : LOVE_NOTES.map((_, i) => i).filter(i => !seenIndexes.includes(i));
+      const idx = pool[Math.floor(Math.random() * pool.length)];
+      lastIndex = idx; seenIndexes.push(idx);
+      
+      loveText.textContent = LOVE_NOTES[idx];
+      if (loveNumber) loveNumber.textContent = `#${idx + 1} of ${LOVE_NOTES.length}`;
+      const dot = document.getElementById(`dot-${idx}`);
+      if (dot) dot.classList.add('seen');
+      
+      loveMessage.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeNote() {
+      if (!loveMessage) return;
+      loveMessage.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Both the jar and the button trigger the magic effect
+    [openJarBtn, jarElement].forEach(el => {
+      if (el) el.addEventListener('click', triggerJarMagic);
+    });
+
+    if (closeJarMsg) closeJarMsg.addEventListener('click', closeNote);
+    if (loveMessage) loveMessage.addEventListener('click', e => { if (e.target === loveMessage) closeNote(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNote(); });
+
+    /* ── 6. AUDIO PLAYER ──────────────────────────────────────── */
+    const audio        = document.getElementById('audioPlayer');
+    const playBtn      = document.getElementById('audioPlayBtn');
+    const playIcon     = document.getElementById('playIcon');
+    const progressFill = document.getElementById('progressFill');
+    const audioTime    = document.getElementById('audioTime');
+    const vinylDisc    = document.getElementById('playerVinyl');
+
+    function formatTime(s) {
+      if (isNaN(s)) return '0:00';
+      return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+    }
+
+    if (playBtn && audio) {
+      playBtn.addEventListener('click', () => audio.paused ? audio.play().catch(()=>{}) : audio.pause());
+      audio.addEventListener('play',  () => { if (playIcon) playIcon.textContent = '❚❚'; if (vinylDisc) vinylDisc.classList.add('spinning'); });
+      audio.addEventListener('pause', () => { if (playIcon) playIcon.textContent = '▶'; if (vinylDisc) vinylDisc.classList.remove('spinning'); });
+      audio.addEventListener('timeupdate', () => {
+        if (!audio.duration) return;
+        if (progressFill) progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        if (audioTime) audioTime.textContent = formatTime(audio.currentTime);
+      });
+      const progressBg = document.querySelector('.player__progress-bg');
+      if (progressBg) progressBg.addEventListener('click', e => {
+        const r = progressBg.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+      });
+    }
+
+    /* ── 7. SCROLL REVEAL ─────────────────────────────────────── */
+    [
+      '.gallery .section-label', '.gallery .section-title', '.gallery__hint',
+      '.timeline__item',
+      '.jar-section .section-label', '.jar-section .section-title',
+      '.jar-section .section-subtitle', '.jar-wrapper',
+      '.letter-section .section-label', '.letter-paper', '.player-wrapper',
+    ].forEach(sel => document.querySelectorAll(sel).forEach(el => el.classList.add('reveal')));
+
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
+    .observe && document.querySelectorAll('.reveal').forEach(el =>
+      new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }).observe(el)
+    );
+
+    /* ── 8. SMOOTH SCROLL ─────────────────────────────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const t = document.querySelector(link.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    /* ── 9. EASTER EGG — Konami Code ↑↑↓↓←→←→BA ─────────────── */
+    const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let kPos = 0;
+    document.addEventListener('keydown', e => {
+      kPos = (e.key === KONAMI[kPos]) ? kPos + 1 : 0;
+      if (kPos === KONAMI.length) { kPos = 0; for (let i = 0; i < 40; i++) setTimeout(spawnHeart, i * 60); }
+    });
+    function spawnHeart() {
+      const h = document.createElement('div');
+      h.textContent = '♥';
+      h.style.cssText = `position:fixed;left:${Math.random()*100}vw;top:${Math.random()*100}vh;font-size:${Math.random()*24+12}px;color:${Math.random()>.5?'#B05050':'#D4897A'};pointer-events:none;z-index:9998;opacity:1;animation:heart-fall 1.8s ease forwards`;
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1900);
+    }
+    const hs = document.createElement('style');
+    hs.textContent = '@keyframes heart-fall{0%{transform:translateY(0) scale(0.5);opacity:1}100%{transform:translateY(60px) scale(1.1);opacity:0}}';
+    document.head.appendChild(hs);
+
+    /* ── Console love note ────────────────────────────────────── */
+    console.log('%c♥ made with love ♥','color:#B05050;font-family:Georgia,serif;font-size:18px;font-style:italic;');
+    console.log('%c100 days and counting. 🎞️','color:#9E7B58;font-family:monospace;font-size:12px;');
+  </script>
+</body>
+</html>
